@@ -14,18 +14,30 @@ class TestCases(unittest.TestCase):
     http://apps.testinsane.com/rte/
     """
     def test_get_200(self):
-        r = api_helper.get("/status/200")
+        # Arrange
+        endpoint = "/status/200"
 
+        # Act
+        r = api_helper.get(endpoint)
+
+        # Assert
         msg = "Incorrect status code: %d" % r.status_code
         self.assertEqual(r.status_code, 200, msg)
 
     def test_get_401(self):
-        r = api_helper.get("/status/401")
+        # Arrange
+        endpoint = "/status/401"
 
+        # Act
+        r = api_helper.get(endpoint)
+
+        # Assert
         msg = "Incorrect status code: %d" % r.status_code
         self.assertEqual(r.status_code, 401, msg)
 
     def test_post_200(self):
+        # Arrange
+        endpoint = "/status/200"
         headers = {
             "content-type": "application/json"
         }
@@ -33,13 +45,14 @@ class TestCases(unittest.TestCase):
             "id": "1",
             "name": "OctoberTest"
         }
-        r = api_helper.post("/status/200", headers, payload)
+
+        # Act
+        r = api_helper.post(endpoint, headers, payload)
         r_payload = r.json()
 
-        # verify status code
+        # Assert
         msg = "Incorrect status code: %d" % r.status_code
         self.assertEqual(r.status_code, 200, msg)
-        # verify response payload
         msg = "Response payload did not match the request payload."
         self.assertTrue(json_helper.compare(payload, r_payload), msg)
 
